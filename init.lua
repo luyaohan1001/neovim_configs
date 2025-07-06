@@ -7,8 +7,8 @@ vim.opt.number = true            -- Show absolute line number
 vim.opt.relativenumber = false    -- Show relative line numbers
 
 -- Tabs & Indentation
-vim.opt.tabstop = 4              -- Number of spaces per tab
-vim.opt.shiftwidth = 4           -- Number of spaces to use for autoindent
+vim.opt.tabstop = 2              -- Number of spaces per tab
+vim.opt.shiftwidth = 2           -- Number of spaces to use for autoindent
 vim.opt.expandtab = true         -- Use spaces instead of tabs
 vim.opt.smartindent = true       -- Smart auto-indenting on new lines
 
@@ -43,8 +43,9 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.termguicolors = true     -- Enable true color support
 vim.opt.background = "dark"      -- Set background for theme
 vim.cmd("syntax on") -- Classic vim command in Lua
+
 -- Use a default one (like 'desert', 'elflord', 'evening', 'morning', etc.)
-vim.cmd("colorscheme elflord")
+vim.cmd("colorscheme industry")
 
 -- Split windows
 vim.opt.splitbelow = true        -- New horizontal split below
@@ -55,3 +56,20 @@ vim.opt.timeoutlen = 300         -- Time to wait for a mapped sequence (ms)
 
 -- Show matching brackets
 vim.opt.showmatch = true
+
+
+
+-- Used to escape from terminal opened in vim split, map <Esc> to <C-\><C-n>.
+vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true })
+
+-- ========================
+-- PLUGINS
+-- ========================
+
+-- leader key
+vim.g.mapleader = " "
+
+-- loads lua/plugins.lua
+require("plugins")
+
+
