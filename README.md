@@ -1,5 +1,4 @@
-# 🌙 Lua.yo
-
+neovim_configs
 > A minimal and personalized **Neovim configuration**, crafted for **Luyao** — powered by Lua.
 
 ---
@@ -16,10 +15,22 @@ Folder structure:
 
 ## 🚀 Getting Started
 
-Clone the repo:
-   ```bash
-   git clone https://github.com/luyao-han/lua.yo ~/.config/nvim
-   ```
+- Clone the repo:
+```bash
+git clone https://github.com/luyao-han/lua.yo ~/.config/nvim
+```
+
+- Setup Packer: https://github.com/wbthomason/packer.nvim
+```bash
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
+
+- Install latest plugins from lua/plugins.lua
+```
+PackerSync
+```
+
+
 
 ## Nerd Font:
 
