@@ -79,6 +79,7 @@ local function setup_plugins(use)
     end
   }
 
+
   --[[ PlantUML preview
   use {
     "weirongxu/plantuml-previewer.vim",
@@ -104,6 +105,12 @@ local function setup_plugins(use)
   ]]
 
 
+  -- Plugin: telescope with arg picker, such as searching speific file .
+  use {
+    "nvim-telescope/telescope-live-grep-args.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+  }
+
   -- Plugin: telescope, fuzzy finder and search tool.
   use {
     'nvim-telescope/telescope.nvim',
@@ -114,27 +121,75 @@ local function setup_plugins(use)
   
       telescope.setup {
         defaults = {
-          layout_config = {
-            horizontal = { preview_width = 0.6 },
-          },
-          sorting_strategy = "ascending",
-          prompt_prefix = "🔍 ",
-          selection_caret = "➤ ",
-          winblend = 0,
-        }
+            layout_strategy = "vertical",
+            layout_config = {
+              vertical = {
+                width = 0.9,
+                height = 0.9,
+                preview_height = 0.5,
+              },
+            },
+            sorting_strategy = "ascending",
+            prompt_prefix = "🔍 ",
+            selection_caret = "➤ ",
+            winblend = 0,
+          }
       }
+
+      telescope.load_extension("live_grep_args")
   
       -- Keymaps for Telescope pickers
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Find Files" })
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep,  { desc = "Live Grep" })
+      vim.keymap.set('n', '<leader>fc', builtin.live_grep,  { desc = "Live Grep" })
       vim.keymap.set('n', '<leader>fb', builtin.buffers,    { desc = "Find Buffers" })
       vim.keymap.set('n', '<leader>fh', builtin.help_tags,  { desc = "Find Help" })
       vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = "Git Commits" })
       vim.keymap.set('n', '<leader>gs', builtin.git_status,  { desc = "Git Status" })
       vim.keymap.set('n', '<leader>gl', builtin.git_bcommits, { desc = "Git Log (Buffer)" })
+
+      -- 🔍 live_grep_args picker
+      local lga = require("telescope").extensions.live_grep_args
+      vim.keymap.set('n', '<leader>fa', lga.live_grep_args, { desc = "Live Grep (Args)" })
     end
   }
+
+
+  -- Plugin: Terminal
+  use {
+    "akinsho/toggleterm.nvim", 
+
+    tag = '*', 
+
+    config = function()
+      require("toggleterm").setup()
+    end
+
+  }
+
+
+  -- Plugin: resolving git conflict
+  use {
+    'akinsho/git-conflict.nvim', 
+    tag = "*", 
+    config = function()
+    require('git-conflict').setup()
+  end}
+
+  use "folke/tokyonight.nvim"
+  require("tokyonight").setup({
+    style = "storm",  -- 可选：storm / night / moon / day
+    transparent = true,
+    terminal_colors = true,
+    styles = {
+      comments = { italic = true },
+      keywords = { italic = true },
+      sidebars = "transparent",
+      floats = "transparent",
+    },
+  })
+  vim.cmd.colorscheme "tokyonight"
+
   
   -- Plugin: Language Server Protocol (LSP) for code intelligence
   use {
@@ -175,10 +230,16 @@ local function setup_plugins(use)
     end
   }
 
-
 -- end: setup_plugins
 end
 
+-- passing setup_plugins as init function to packer.
+require("packer").startup(setup_plugins)
 
--- return from this script passing setup_plugins as init function to packer.
-return require("packer").startup(setup_plugins)
+
+
+-- Used to escape from terminal opened in vim split, map <Esc> to <C-\><C-n>.
+vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true })
+
+-- keymaps for plugins
+vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true, silent = true })

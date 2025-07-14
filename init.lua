@@ -26,7 +26,6 @@ vim.opt.hlsearch = true          -- Highlight search matches
 
 -- Clipboard (use system clipboard)
 vim.opt.clipboard = "unnamedplus"
-
 -- Mouse support
 vim.opt.mouse = "a"
 
@@ -57,11 +56,6 @@ vim.opt.timeoutlen = 300         -- Time to wait for a mapped sequence (ms)
 -- Show matching brackets
 vim.opt.showmatch = true
 
-
-
--- Used to escape from terminal opened in vim split, map <Esc> to <C-\><C-n>.
-vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true })
-
 -- ========================
 -- PLUGINS
 -- ========================
@@ -71,5 +65,4 @@ vim.g.mapleader = " "
 
 -- loads lua/plugins.lua
 require("plugins")
-
 
